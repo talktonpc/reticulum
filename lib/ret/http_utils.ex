@@ -34,8 +34,15 @@ defmodule Ret.HttpUtils do
         []
       end
 
+<<<<<<< HEAD
     retry with: exponential_backoff() |> randomize |> cap(cap_ms) |> expiry(expiry_ms) do
       case HTTPoison.request(verb, url, body, headers,
+=======
+    retry with: exponential_backoff() |> randomize |> cap(options[:cap_ms]) |> expiry(options[:expiry_ms]) do
+      http_client = module_config(:http_client) || HTTPoison
+
+      case http_client.request(verb, url, body, headers,
+>>>>>>> 26c56ff100a111bb299563461c7ee9ccbdfd4a4f
              follow_redirect: true,
              timeout: cap_ms,
              recv_timeout: cap_ms,
@@ -78,7 +85,7 @@ defmodule Ret.HttpUtils do
   end
 
   def fetch_content_type(url) do
-    case url |> retry_head_then_get_until_success([{"Range", "bytes=0-32768"}]) do
+    case url |> retry_head_then_get_until_success(headers: [{"Range", "bytes=0-32768"}]) do
       :error -> {:error, "Could not get content-type"}
       %HTTPoison.Response{headers: headers} -> {:ok, headers |> content_type_from_headers}
     end

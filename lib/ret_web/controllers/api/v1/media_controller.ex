@@ -94,7 +94,6 @@ defmodule RetWeb.Api.V1.MediaController do
     maybe_bump_ttl(value, query)
     Logger.info("~~~~~~~~~~~~~~~ 4.maybe_bump_ttl")
     render_resolved_media_or_error(conn, value)
-    Logger.info("~~~~~~~~~~~~~~~ 5")
   end
 
   defp query_for(conn, url, version, quality) do
