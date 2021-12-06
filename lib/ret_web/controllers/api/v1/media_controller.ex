@@ -84,14 +84,11 @@ defmodule RetWeb.Api.V1.MediaController do
 
   require Logger
   defp resolve_and_render(conn, url, version, quality \\ nil) do
-    Logger.info("~~~~~~~~~~~~~~~ 1 ")
-    IO.inspect(conn)
+    Logger.info("~~~~~~~~~~~~~~~ 1 #{inspect conn}")
     query = query_for(conn, url, version, quality)
-    Logger.info("~~~~~~~~~~~~~~~ 2")
-    IO.inspect(query)
+    Logger.info("~~~~~~~~~~~~~~~ 2 #{inspect query}")
     value = Cachex.fetch(:media_urls, query)
-    Logger.info("~~~~~~~~~~~~~~~ 3")
-    IO.inspect(value)    
+    Logger.info("~~~~~~~~~~~~~~~ 3 #{inspect value}")
     maybe_do_telemetry(value)
     Logger.info("~~~~~~~~~~~~~~~ 4.maybe_do_telemetry")
     maybe_bump_ttl(value, query)
