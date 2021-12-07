@@ -43,7 +43,7 @@ host = "{{SUB_DOMAIN}}-cors.{{DOMAIN}}"
 port = 443
 
 [ret."Elixir.RetWeb.Endpoint".imgproxy_url]
-host = "localhost"
+host = "{{IMG_PROXY}}"
 port = 5000
 
 [ret."Elixir.RetWeb.Endpoint".assets_url]
