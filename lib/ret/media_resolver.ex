@@ -442,8 +442,8 @@ defmodule Ret.MediaResolver do
 
   def download_sketchfab_model_to_path(%{model_id: model_id, api_key: api_key, path: path}) do
     case get_sketchfab_model_zip_url(%{model_id: model_id, api_key: api_key}) do
-      Logger.info("~~~get_sketchfab_model_zip_url~~~#{model_id}~~~#{api_key}")      
       {:ok, zip_url} ->
+        Logger.info("~~~get_sketchfab_model_zip_url~~~1~~~#{model_id}~~~#{api_key}")      
         Download.from(zip_url, path: path)
         {:ok, %{content_type: "model/gltf+zip"}}
 
@@ -461,8 +461,8 @@ defmodule Ret.MediaResolver do
       Statix.increment("ret.media_resolver.sketchfab.requests")
 
       case download_sketchfab_model_to_path(%{model_id: model_id, api_key: api_key, path: path}) do
-        Logger.info("~~~download_sketchfab_model_to_path~~~#{model_id}~~~#{api_key}~~~#{path}")
         {:ok, metadata} ->
+          Logger.info("~~~download_sketchfab_model_to_path~~~2~~~#{model_id}~~~#{api_key}~~~#{path}")
           Statix.increment("ret.media_resolver.sketchfab.ok")
           {:ok, metadata}
 
