@@ -42,7 +42,6 @@ defmodule Ret.MediaResolver do
     #       more easily track individual failures and only fallback when necessary.
     #       Also make sure they have a uniform response shape for indicating an
     #       error.
-    Logger.info("~~~~~~~~~resolve~~~#{inspect query}~~~#{inspect root_host}")
     case resolve(query, root_host) do
       :error ->
         fallback_to_screenshot_opengraph_or_nothing(query)
@@ -110,10 +109,12 @@ defmodule Ret.MediaResolver do
   end
 
   def resolve(%MediaResolverQuery{} = query, root_host) do
+    Logger.info("~~~???")
     resolve_with_ytdl(query, root_host, query |> ytdl_format(root_host))
   end
 
   def resolve_with_ytdl(%MediaResolverQuery{} = query, root_host, ytdl_format) do
+    Logger.info("~~~ not just youtube links handled here in resolve_with_ytdl????")
     with ytdl_host when is_binary(ytdl_host) <- module_config(:ytdl_host) do
       case fetch_ytdl_response(query, ytdl_format) do
         {:offline_stream, _body} ->
@@ -410,6 +411,8 @@ defmodule Ret.MediaResolver do
   end
 
   defp resolve_sketchfab_model(model_id, %MediaResolverQuery{url: %URI{} = uri, version: version}) do
+    sketchfab_apikey=module_config(:sketchfab_api_key)
+    Logger.info("~~~resolve_sketchfab_model~~~#{sketchfab_apikey}~~~#{uri}~~~#{version}")
     [uri, meta] =
       with api_key when is_binary(api_key) <- module_config(:sketchfab_api_key) do
         resolve_sketchfab_model(model_id, api_key, version)
