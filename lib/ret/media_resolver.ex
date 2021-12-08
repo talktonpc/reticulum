@@ -114,9 +114,11 @@ defmodule Ret.MediaResolver do
   end
 
   def resolve_with_ytdl(%MediaResolverQuery{} = query, root_host, ytdl_format) do
-    Logger.info("~~~ not just youtube links handled here in resolve_with_ytdl????")
+    Logger.info("~~~ not just video links handled here in resolve_with_ytdl???? root_host: #{root_host} ???")
     with ytdl_host when is_binary(ytdl_host) <- module_config(:ytdl_host) do
-      case fetch_ytdl_response(query, ytdl_format) do
+      ytdl_res=fetch_ytdl_response(query, ytdl_format)
+      Logger.info("~~~ytdl_res: #{inspect ytdl_res}")
+      case ytdl_res do
         {:offline_stream, _body} ->
           {:commit,
            resolved(query.url, %{
