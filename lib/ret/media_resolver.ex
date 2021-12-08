@@ -1,3 +1,5 @@
+require Logger
+
 defmodule Ret.ResolvedMedia do
   @enforce_keys [:uri]
   defstruct [:uri, :audio_uri, :meta, :ttl]
@@ -40,6 +42,7 @@ defmodule Ret.MediaResolver do
     #       more easily track individual failures and only fallback when necessary.
     #       Also make sure they have a uniform response shape for indicating an
     #       error.
+    Logger.info("~~~~~~~~~resolve~~~#{inspect query}~~~#{inspect root_host}")
     case resolve(query, root_host) do
       :error ->
         fallback_to_screenshot_opengraph_or_nothing(query)
@@ -313,6 +316,7 @@ defmodule Ret.MediaResolver do
   # TODO: Refactor this function
   defp fallback_to_screenshot_opengraph_or_nothing(%MediaResolverQuery{url: %URI{host: host} = uri, version: version}) do
     photomnemonic_endpoint = module_config(:photomnemonic_endpoint)
+    Logger.info("~~~fallback_to_screenshot_opengraph_or_nothing~~~#{photomnemonic_endpoint}")
 
     # Crawl og tags for hubs rooms + scenes
     is_local_url = host === RetWeb.Endpoint.host()

@@ -3,6 +3,8 @@ defmodule RetWeb.Api.V1.MediaController do
   use Retry
   alias Ret.Statix
 
+  require Logger
+
   def create(conn, %{"media" => %{"url" => url, "quality" => quality}, "version" => version}),
     do: resolve_and_render(conn, url, version, String.to_atom(quality))
 
@@ -82,7 +84,6 @@ defmodule RetWeb.Api.V1.MediaController do
     end
   end
 
-  require Logger
   defp resolve_and_render(conn, url, version, quality \\ nil) do
     Logger.info("~~~~~~~~~~~~~~~ 1 #{inspect conn}")
     query = query_for(conn, url, version, quality)
