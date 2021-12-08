@@ -411,8 +411,7 @@ defmodule Ret.MediaResolver do
   end
 
   defp resolve_sketchfab_model(model_id, %MediaResolverQuery{url: %URI{} = uri, version: version}) do
-    sketchfab_apikey=module_config(:sketchfab_api_key)
-    Logger.info("~~~resolve_sketchfab_model~~~#{sketchfab_apikey}~~~#{uri}~~~#{version}")
+    Logger.info("~~~resolve_sketchfab_model~~~#{uri}~~~#{version}")
     [uri, meta] =
       with api_key when is_binary(api_key) <- module_config(:sketchfab_api_key) do
         resolve_sketchfab_model(model_id, api_key, version)
