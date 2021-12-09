@@ -116,6 +116,7 @@ defmodule Ret.MediaResolver do
   def resolve_with_ytdl(%MediaResolverQuery{} = query, root_host, ytdl_format) do
     Logger.info("~~~ not just video links handled here in resolve_with_ytdl???? root_host: #{root_host} ???")
     with ytdl_host when is_binary(ytdl_host) <- module_config(:ytdl_host) do
+      Logger.info("~~~ytdl_host: #{inspect ytdl_host}")
       ytdl_res=fetch_ytdl_response(query, ytdl_format)
       Logger.info("~~~ytdl_res: #{inspect ytdl_res}")
       case ytdl_res do
@@ -177,6 +178,7 @@ defmodule Ret.MediaResolver do
   end
 
   defp fetch_ytdl_response(%MediaResolverQuery{url: %URI{} = uri, quality: quality}, ytdl_format) do
+    Logger.info("fetch_ytdl_response, for: #{inspect uri}")
     ytdl_host = module_config(:ytdl_host)
 
     ytdl_query_args =
