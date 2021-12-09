@@ -190,6 +190,7 @@ defmodule Ret.MediaResolver do
       |> ytdl_add_user_agent_for_quality(quality)
 
     ytdl_query = URI.encode_query(ytdl_query_args)
+    Logger.info("fetch_ytdl_response, at: #{ytdl_host}/api/info?#{ytdl_query}")
 
     case "#{ytdl_host}/api/info?#{ytdl_query}" |> retry_get_until_valid_ytdl_response do
       %HTTPoison.Response{status_code: 200, body: body} ->
