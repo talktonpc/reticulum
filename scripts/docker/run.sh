@@ -3,7 +3,10 @@ healthcheck(){
     while true; do (echo -e 'HTTP/1.1 200 OK\r\n\r\n 1') | nc -lp 1111 > /dev/null; done
 }
 
+source /root/.bashrc
+
 sed -i "s/{{POD_DNS}}/ret.${POD_NS}.svc.cluster.local/g" config.toml 
+
 echo "update runtime configs into config.toml" 
 prefix="turkeyCfg_"; for var in $(compgen -e); do [[ $var == $prefix* ]] && sed -i "s/{{${var#$prefix}}}/${!var//\//\\\/}/g" config.toml; done 
 export HOME="/ret/var" LC_ALL="en_US.UTF-8 LANG=en_US.UTF-8" REPLACE_OS_VARS="true" 

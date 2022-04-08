@@ -10,6 +10,7 @@ defmodule Ret.Application do
     # Start application, start repos, take lock, run migrations, stop repos
     Application.load(:ret)
     EctoBootMigration.start_dependencies()
+    {Phoenix.PubSub, [name: Ret.PubSub, adapter: Phoenix.PubSub.PG2]}
 
     repos_pids =
       Ret.Locking.exec_if_session_lockable("ret_migration", fn ->

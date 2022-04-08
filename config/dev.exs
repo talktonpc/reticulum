@@ -84,7 +84,7 @@ config :ret, Ret.Repo,
   database: "ret_dev",
   hostname: if(env_db_host == "", do: "localhost", else: env_db_host),
   template: "template0",
-  pool_size: 10
+  pool_size: 30
 
 config :ret, Ret.SessionLockRepo,
   username: "postgres",
@@ -92,7 +92,7 @@ config :ret, Ret.SessionLockRepo,
   database: "ret_dev",
   hostname: if(env_db_host == "", do: "localhost", else: env_db_host),
   template: "template0",
-  pool_size: 10
+  pool_size: 30
 
 config :ret, RetWeb.Plugs.HeaderAuthorization,
   header_name: "x-ret-admin-access-key",
@@ -221,7 +221,7 @@ config :ret, Ret.Locking,
     username: "postgres",
     password: "postgres",
     database: "ret_dev",
-    hostname: if(env_db_host == "", do: "localhost", else: env_db_host)
+    hostname: if(env_db_host == "", do: "0.0.0.0", else: env_db_host)
   ]
 
 config :ret, Ret.Repo.Migrations.AdminSchemaInit, postgrest_password: "password"
